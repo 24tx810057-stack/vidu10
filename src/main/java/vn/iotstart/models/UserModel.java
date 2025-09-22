@@ -16,7 +16,7 @@ public class UserModel implements Serializable {
 	private String avatar;
 	private int roleid;
 	private String phone;
-	private Date createddate;
+	private Date createdate;
 
 	// Tạo contructor
 	public UserModel() {
@@ -24,7 +24,7 @@ public class UserModel implements Serializable {
 	}
 
 	public UserModel(int id, String email, String username, String fullname, String password, String avatar, int roleid,
-			String phone, Date createddate) {
+			String phone, Date createdate) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -34,7 +34,7 @@ public class UserModel implements Serializable {
 		this.avatar = avatar;
 		this.roleid = roleid;
 		this.phone = phone;
-		this.createddate = createddate;
+		this.createdate = createdate;
 	}
 
 	// tạo getter vs setter
@@ -102,12 +102,12 @@ public class UserModel implements Serializable {
 		this.phone = phone;
 	}
 
-	public Date getCreateddate() {
-		return createddate;
+	public Date getCreatedate() {
+		return createdate;
 	}
 
-	public void setCreateddate(Date createddate) {
-		this.createddate = createddate;
+	public void setCreatedate(Date createdate) {
+		this.createdate = createdate;
 	}
 	
 	//Overide một số phương thức
@@ -115,7 +115,7 @@ public class UserModel implements Serializable {
 	public String toString() {
 		return "UserModel [id=" + id + ", email=" + email + ", username=" + username + ", fullname=" + fullname
 				+ ", password=" + password + ", avatar=" + avatar + ", roleid=" + roleid + ", phone=" + phone
-				+ ", createddate=" + createddate + "]";
+				+ ", createdate=" + createdate + "]";
 	}
 
 	

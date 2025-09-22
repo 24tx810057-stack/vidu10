@@ -16,7 +16,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void insert(UserModel users) {
-        String sql = "INSERT INTO [Users](email, username, fullname, password, avatar, roleid, phone, createddate) "
+        String sql = "INSERT INTO [Users](email, username, fullname, password, avatar, roleid, phone, createdate) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             conn = new DBConnect().getConnection();
@@ -28,7 +28,7 @@ public class UserDaoImpl implements UserDao {
             ps.setString(5, users.getAvatar());
             ps.setInt(6, users.getRoleid());
             ps.setString(7, users.getPhone());
-            ps.setDate(8, users.getCreateddate());
+            ps.setDate(8, users.getCreatedate());
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -54,7 +54,7 @@ public class UserDaoImpl implements UserDao {
                 user.setAvatar(rs.getString("avatar"));
                 user.setRoleid(rs.getInt("roleid"));
                 user.setPhone(rs.getString("phone"));
-                user.setCreateddate(rs.getDate("createddate"));
+                user.setCreatedate(rs.getDate("createdate"));
                 return user;
             }
         } catch (Exception e) {
@@ -135,7 +135,7 @@ public class UserDaoImpl implements UserDao {
                 user.setAvatar(rs.getString("avatar"));
                 user.setRoleid(rs.getInt("roleid"));
                 user.setPhone(rs.getString("phone"));
-                user.setCreateddate(rs.getDate("createddate"));
+                user.setCreatedate(rs.getDate("createdate"));
                 return user;
             }
         } catch (Exception e) {

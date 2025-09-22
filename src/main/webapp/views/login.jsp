@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="core1" uri="jakarta.tags.core" %>
+<%@ taglib prefix="core1" uri="jakarta.tags.core"%>
 
 
 <form action="login" method="post">
@@ -24,7 +24,6 @@
 				</span> <input type="password" placeholder="Mật khẩu" name="password">
 			</div>
 		</label>
-	</section>
 	</section>
 	<section>
 		<label class="input login-input">
