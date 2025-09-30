@@ -11,17 +11,16 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.fileupload2.core.FileItem;
+import org.apache.commons.fileupload2.core.DiskFileItemFactory;
+import org.apache.commons.fileupload2.jakarta.JakartaServletFileUpload;
 
 import vn.iotstart.models.Category;
 import vn.iotstart.services.CategoryService;
 import vn.iotstart.services.impl.CategoryServiceImpl;
 import vn.iotstart.utils.Constant; // để chứa DIR upload
 
-
+import java.nio.charset.StandardCharsets;
 
 @WebServlet(urlPatterns = { "/admin/category/edit" })
 public class CategoryEditController extends HttpServlet {
@@ -41,53 +40,49 @@ public class CategoryEditController extends HttpServlet {
 	}
 
 	
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
+            throws ServletException, IOException {
 
-		Category category = new Category();
+        Category category = new Category();
 
-		DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
-		ServletFileUpload servletFileUpload = new ServletFileUpload(diskFileItemFactory);
-		servletFileUpload.setHeaderEncoding("UTF-8");
+        DiskFileItemFactory factory = DiskFileItemFactory.builder().get();
+        JakartaServletFileUpload upload = new JakartaServletFileUpload(factory);
 
-		try {
-			resp.setContentType("text/html");
-			resp.setCharacterEncoding("UTF-8");
-			req.setCharacterEncoding("UTF-8");
+        try {
+            resp.setContentType("text/html");
+            resp.setCharacterEncoding("UTF-8");
+            req.setCharacterEncoding("UTF-8");
 
-			//List<FileItem> items = servletFileUpload.parseRequest(req);
-			List<FileItem> items = servletFileUpload.parseRequest(
-				    (javax.servlet.http.HttpServletRequest) req
-				);
+            List<FileItem> items = upload.parseRequest(req);
 
-			
-			for (FileItem item : items) {
-				if (item.getFieldName().equals("id")) {
-					category.setId(Integer.parseInt(item.getString()));
-				} else if (item.getFieldName().equals("name")) {
-					category.setName(item.getString("UTF-8"));
-				} else if (item.getFieldName().equals("icon")) {
-					if (item.getSize() > 0) { // nếu có file upload mới
-						String originalFileName = item.getName();
-						int index = originalFileName.lastIndexOf(".");
-						String ext = originalFileName.substring(index + 1);
-						String fileName = System.currentTimeMillis() + "." + ext;
-						File file = new File(Constant.DIR + "/category/" + fileName);
-						item.write(file);
-						category.setIcon("category/" + fileName);
-					} else {
-						category.setIcon(null);
-					}
-				}
-			}
+            for (FileItem item : items) {
+                if (item.getFieldName().equals("id")) {
+                    category.setId(Integer.parseInt(item.getString(StandardCharsets.UTF_8)));
+                } else if (item.getFieldName().equals("name")) {
+                    category.setName(item.getString(StandardCharsets.UTF_8));
+                } else if (item.getFieldName().equals("icon")) {
+                    if (item.getSize() > 0) { // nếu có file upload
+                        String originalFileName = item.getName();
+                        int index = originalFileName.lastIndexOf(".");
+                        String ext = originalFileName.substring(index + 1);
+                        String fileName = System.currentTimeMillis() + "." + ext;
 
-			cateService.edit(category);
-			resp.sendRedirect(req.getContextPath() + "/admin/category/list");
+                        File file = new File(Constant.DIR + "/category/" + fileName);
+                        item.write(file.toPath());
 
-		} catch (FileUploadException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+                        category.setIcon("category/" + fileName);
+                    } else {
+                        category.setIcon(null); // nếu không upload file mới
+                    }
+                }
+            }
+
+            cateService.edit(category);
+            resp.sendRedirect(req.getContextPath() + "/admin/category/list");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
