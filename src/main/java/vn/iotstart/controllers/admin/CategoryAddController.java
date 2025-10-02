@@ -43,8 +43,6 @@ public class CategoryAddController extends HttpServlet {
 
 		DiskFileItemFactory factory = DiskFileItemFactory.builder().get();
 		JakartaServletFileUpload upload = new JakartaServletFileUpload(factory);
-		
-		
 
 		try {
 			resp.setContentType("text/html");
@@ -63,10 +61,16 @@ public class CategoryAddController extends HttpServlet {
 						String ext = originalFileName.substring(index + 1);
 						String fileName = System.currentTimeMillis() + "." + ext;
 
-						File file = new File(Constant.DIR + "/category/" + fileName);
+						// tạo thư mục lưu ảnh nếu chưa có
+						File uploadDir = new File(Constant.DIR + "/category");
+						if (!uploadDir.exists()) {
+							uploadDir.mkdirs(); // tự tạo nếu chưa có
+						}
+						File file = new File(uploadDir, fileName);
 						item.write(file.toPath());
 
 						category.setIcon("category/" + fileName);
+
 					}
 				}
 			}

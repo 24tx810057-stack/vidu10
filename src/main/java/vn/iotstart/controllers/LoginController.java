@@ -13,65 +13,62 @@ import vn.iotstart.models.UserModel;
 import vn.iotstart.services.UserService;
 import vn.iotstart.services.impl.UserServiceImpl;
 
+
+
+
 @WebServlet(urlPatterns = { "/login" })
 public class LoginController extends HttpServlet {
+    private static final long serialVersionUID = 1L;
 
-	private static final long serialVersionUID = 1L;
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession(false);
 
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		HttpSession session = req.getSession(false);
-		if (session != null && session.getAttribute("account") != null) {
-			resp.sendRedirect(req.getContextPath() + "/waiting");
-			return;
-		}
-		// Check cookie
-		Cookie[] cookies = req.getCookies();
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals("username")) {
-					session = req.getSession(true);
-					session.setAttribute("username", cookie.getValue());
-					resp.sendRedirect(req.getContextPath() + "/waiting");
-					return;
-				}
-			}
-		}
+        // Nếu đã login rồi thì cho về waiting (từ đó check role → admin/home hay user/home)
+        if (session != null && session.getAttribute("account") != null) {
+            resp.sendRedirect(req.getContextPath() + "/waiting");
+            return;
+        }
 
-		req.getRequestDispatcher("views/login.jsp").forward(req, resp);
-	}
+        // Nếu chưa login thì hiện trang login
+        req.getRequestDispatcher("views/login.jsp").forward(req, resp);
+    }
 
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.setContentType("text/html");
-		resp.setCharacterEncoding("UTF-8");
-		req.setCharacterEncoding("UTF-8");
-		String username = req.getParameter("username");
-		String password = req.getParameter("password");
-		String alertMsg = "";
-		if (username.isEmpty() || password.isEmpty()) {
-			alertMsg = "Tài khoản hoặc mật khẩu không được rỗng";
-			req.setAttribute("alert", alertMsg);
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/html");
+        resp.setCharacterEncoding("UTF-8");
+        req.setCharacterEncoding("UTF-8");
 
-			req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
-			return;
-		}
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
+        String alertMsg = "";
 
-		UserService service = new UserServiceImpl(); // lấy tất cả hàm trong Service ( business...)
+        if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
+            alertMsg = "Tài khoản hoặc mật khẩu không được rỗng";
+            req.setAttribute("alert", alertMsg);
+            req.getRequestDispatcher("views/login.jsp").forward(req, resp);
+            return;
+        }
 
-		UserModel user = service.login(username, password);
+        UserService service = new UserServiceImpl();
+        UserModel user = service.login(username, password);
 
-		if (user != null) {
-			HttpSession session = req.getSession(true);
-			session.setAttribute("account", user);
-			resp.sendRedirect(req.getContextPath() + "/waiting");
-		} else {
-			alertMsg = "Tài khoản hoặc mật khẩu không đúng";
-			req.setAttribute("alert", alertMsg);
-			req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
+        if (user != null) {
+            HttpSession session = req.getSession(true);
+            session.setAttribute("account", user);
+            session.setMaxInactiveInterval(60 * 5); // session hết hạn sau 5 phút
 
-		}
+            // Nếu muốn nhớ login qua cookie
+            Cookie cookie = new Cookie("account", user.getUsername());
+            cookie.setMaxAge(60 * 5); // 5 phút
+            resp.addCookie(cookie);
 
-	}
-
+            resp.sendRedirect(req.getContextPath() + "/waiting");
+        } else {
+            alertMsg = "Tài khoản hoặc mật khẩu không đúng";
+            req.setAttribute("alert", alertMsg);
+            req.getRequestDispatcher("views/login.jsp").forward(req, resp);
+        }
+    }
 }
