@@ -7,6 +7,7 @@ import vn.iotstart.daos.CategoryDao;
 import vn.iotstart.daos.impl.CategoryDaoImpl;
 import vn.iotstart.models.Category;
 import vn.iotstart.services.CategoryService;
+import vn.iotstart.utils.Constant;
 
 public class CategoryServiceImpl implements CategoryService {
 
@@ -45,8 +46,8 @@ public class CategoryServiceImpl implements CategoryService {
 		if (newCategory.getIcon() != null) {
 			// XOA ANH CU DI
 			String fileName = oldCategory.getIcon();
-			final String dir = "E:\\upload";
-			File file = new File(dir + "/category" + fileName);
+			final String dir = "D:\\upload";
+			File file = new File(Constant.class + "/category/" + fileName);
 			if (file.exists()) {
 				file.delete();
 			}

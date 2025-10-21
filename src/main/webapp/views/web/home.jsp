@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
+<h1>Trang cho User</h1>
+<p>Phần nội dung cho user </p>
+
+
+<%-- 
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,3 +26,4 @@
     </ul>
 </body>
 </html>
+--%>

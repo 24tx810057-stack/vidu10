@@ -23,7 +23,8 @@
 					<ul class="list-inline right-topbar pull-right">
 						<li><a
 							href="${pageContext.request.contextPath}/member/myaccount">
-								${sessionScope.account.fullname} </a> | <ahref="${pageContext.request.contextPath}/logout">ĐăngXuất</a></li>
+								${sessionScope.account.fullname} </a> | <a
+							href="${pageContext.request.contextPath}/logout">ĐăngXuất</a></li>
 						<li><i class="search fa fa-search search-button"></i></li>
 					</ul>
 				</div>

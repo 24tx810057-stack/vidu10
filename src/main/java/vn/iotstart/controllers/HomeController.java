@@ -10,7 +10,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/home")
+
+@WebServlet("/web/home")
 public class HomeController extends HttpServlet {
 
 	
@@ -22,7 +23,7 @@ public class HomeController extends HttpServlet {
 		
 		
 		req.setAttribute("name", name); //truyền dữ liệu ra cho tham số của views
-		RequestDispatcher rd = req.getRequestDispatcher("/views/home.jsp"); //gọi views home.jsp hiển thị
+		RequestDispatcher rd = req.getRequestDispatcher("/views/web/home.jsp"); //gọi views home.jsp hiển thị
 		rd.forward(req, resp); // chuyển tham số ra home.jsp
 	}
 	@Override

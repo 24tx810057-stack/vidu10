@@ -1,6 +1,5 @@
 package vn.iotstart.configs;
 
-import java.security.PublicKey;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
