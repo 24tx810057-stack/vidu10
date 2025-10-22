@@ -5,8 +5,7 @@ import vn.iotstart.models.UserModel;
 public interface UserService {
 	public void insert(UserModel user);
 
-	boolean register(String username, String email, String fullname, String password, String phone);
-
+	boolean register(UserModel user);
 
 	boolean checkExistEmail(String email);
 

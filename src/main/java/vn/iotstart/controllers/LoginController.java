@@ -19,14 +19,15 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession(false); // không tự tạo session mới
-
-        // Nếu đã login rồi thì cho về waiting (từ đó check role → admin/home hay user/home)
-        if (session != null && session.getAttribute("account") != null) {
-        	
-            resp.sendRedirect(req.getContextPath() + "/waiting");
-            return;
-        }
+		/*
+		 * HttpSession session = req.getSession(false); // không tự tạo session mới
+		 */
+		/*
+		 * // Nếu đã login rồi thì cho về waiting (từ đó check role → admin/home hay
+		 * user/home) if (session != null && session.getAttribute("account") != null) {
+		 * 
+		 * resp.sendRedirect(req.getContextPath() + "/waiting"); return; }
+		 */
 
         // Nếu chưa login thì hiện trang login
         req.getRequestDispatcher("views/login.jsp").forward(req, resp);

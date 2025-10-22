@@ -1,12 +1,15 @@
-package vn.iotstart.controllers.admin;
+package vn.iotstart.controllers.manager;
 
 import java.io.IOException;
-import jakarta.servlet.*;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import vn.iotstart.models.UserModel;
 
-@WebServlet(urlPatterns = {"/admin/home"})
+@WebServlet(urlPatterns = {"/manager/home"})
 public class HomeController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -16,19 +19,20 @@ public class HomeController extends HttpServlet {
 
         HttpSession session = req.getSession(false);
 
-        // Nếu chưa login → về /login
+        // Nếu chưa login thì đá về /login
         if (session == null || session.getAttribute("account") == null) {
             resp.sendRedirect(req.getContextPath() + "/login");
             return;
         }
 
-        // Lấy user hiện tại
+        // Lấy thông tin người dùng trong session
         UserModel user = (UserModel) session.getAttribute("account");
+
+        // Gửi thông tin user xuống view nếu cần
         req.setAttribute("username", user.getUsername());
         req.setAttribute("roleid", user.getRoleid());
 
-        // Forward tới trang admin/home.jsp
-        RequestDispatcher rd = req.getRequestDispatcher("/views/admin/home.jsp");
-        rd.forward(req, resp);
+        // Hiển thị giao diện home.jsp của manager
+        req.getRequestDispatcher("/views/manager/home.jsp").forward(req, resp);
     }
 }

@@ -40,7 +40,7 @@
 
 							<button 
 							
-							type="submit" class="btn btn-primary w-100">Đăngnhập
+							type="submit" class="btn btn-primary w-100">Đăng nhập
 							
 							</button>
 							

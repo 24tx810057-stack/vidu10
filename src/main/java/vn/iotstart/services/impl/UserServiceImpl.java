@@ -7,53 +7,61 @@ import vn.iotstart.services.UserService;
 
 public class UserServiceImpl implements UserService {
 
-	UserDao userDao = new UserDaoImpl(); // gọi tất cả phương thức của tầng Dao
+    UserDao userDao = new UserDaoImpl(); // gọi tất cả phương thức của tầng Dao
 
-	@Override
-	public UserModel findByUser(String username) {
-		return userDao.findByUser(username);
-	}
+    @Override
+    public UserModel findByUser(String username) {
+        return userDao.findByUser(username);
+    }
 
-	@Override
-	public UserModel login(String username, String password) {
-		UserModel user = this.findByUser(username);
+    @Override
+    public UserModel login(String username, String password) {
+        UserModel user = this.findByUser(username);
 
-		if (user != null && password.equals(user.getPassword())) {
-			return user;
-		}
-		return null;
-	}
+        if (user != null && password.equals(user.getPassword())) {
+            return user;
+        }
+        return null;
+    }
 
-	@Override
-	public void insert(UserModel user) {
-		userDao.insert(user);
-	}
+    @Override
+    public void insert(UserModel user) {
+        userDao.insert(user);
+    }
 
-	@Override
-	public boolean register(String username, String email, String fullname, String password, String phone) {
-		if (userDao.checkExistUsername(username)) {
-			return false;
-		}
-		long millis = System.currentTimeMillis();
-		java.sql.Date date = new java.sql.Date(millis);
+    // ✅ register bằng object UserModel
+    @Override
+    public boolean register(UserModel user) {
+        // Kiểm tra username trùng
+        if (userDao.checkExistUsername(user.getUsername())) {
+            return false;
+        }
 
-		UserModel user = new UserModel(0, username, email, fullname, password, null, 2, phone, date);
-		userDao.insert(user);
-		return true;
-	}
+        // Lấy ngày hiện tại
+        long millis = System.currentTimeMillis();
+        java.sql.Date date = new java.sql.Date(millis);
+        user.setCreatedate(date);
 
-	@Override
-	public boolean checkExistEmail(String email) {
-		return userDao.checkExistEmail(email);
-	}
+        // Set roleid mặc định cho user (2 = user)
+        user.setRoleid(2);
 
-	@Override
-	public boolean checkExistUsername(String username) {
-		return userDao.checkExistUsername(username);
-	}
+        // Gọi insert xuống DAO
+        userDao.insert(user);
+        return true;
+    }
 
-	@Override
-	public boolean checkExistPhone(String phone) {
-		return userDao.checkExistPhone(phone);
-	}
+    @Override
+    public boolean checkExistEmail(String email) {
+        return userDao.checkExistEmail(email);
+    }
+
+    @Override
+    public boolean checkExistUsername(String username) {
+        return userDao.checkExistUsername(username);
+    }
+
+    @Override
+    public boolean checkExistPhone(String phone) {
+        return userDao.checkExistPhone(phone);
+    }
 }

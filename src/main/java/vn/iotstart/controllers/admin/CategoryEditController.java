@@ -18,7 +18,7 @@ import org.apache.commons.fileupload2.jakarta.JakartaServletFileUpload;
 import vn.iotstart.models.Category;
 import vn.iotstart.services.CategoryService;
 import vn.iotstart.services.impl.CategoryServiceImpl;
-import vn.iotstart.utils.Constant; // để chứa DIR upload
+import vn.iotstart.utils.Constant; 
 
 import java.nio.charset.StandardCharsets;
 
