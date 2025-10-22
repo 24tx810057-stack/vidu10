@@ -38,11 +38,6 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public UserModel login(String username, String password) {
 		String sql = "SELECT * FROM [Users] WHERE username = ? AND password = ?";
-		/*
-		 * hoặc String sql =
-		 * "SELECT id, username, email, fullname, password, avatar, roleid, phone, createdate "
-		 * + "FROM Users WHERE username = ? AND password = ?";
-		 */
 
 		try {
 			conn = new DBConnect().getConnection();

@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import vn.iotstart.models.UserModel; // import đúng model User của cha nha
+import vn.iotstart.models.UserModel;
 
 @WebServlet("/web/home")
 public class HomeController extends HttpServlet {

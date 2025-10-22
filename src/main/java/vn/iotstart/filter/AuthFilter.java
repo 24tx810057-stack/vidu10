@@ -30,14 +30,14 @@ public class AuthFilter implements Filter {
         int roleId = user.getRoleid();
         String uri = req.getRequestURI();
 
-        // Nếu là khách chưa duyệt (role 2) mà cố vào admin hoặc manager → cấm
+        
         if (roleId == 2 && (uri.startsWith(req.getContextPath() + "/admin") ||
                             uri.startsWith(req.getContextPath() + "/manager"))) {
             resp.sendRedirect(req.getContextPath() + "/web/home");
             return;
         }
 
-        // Nếu manager (role 1) mà cố vào admin → cấm
+        
         if (roleId == 1 && uri.startsWith(req.getContextPath() + "/admin")) {
             resp.sendRedirect(req.getContextPath() + "/manager/home");
             return;

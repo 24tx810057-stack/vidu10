@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
         userDao.insert(user);
     }
 
-    // ✅ register bằng object UserModel
+    //  register bằng object UserModel
     @Override
     public boolean register(UserModel user) {
         // Kiểm tra username trùng
