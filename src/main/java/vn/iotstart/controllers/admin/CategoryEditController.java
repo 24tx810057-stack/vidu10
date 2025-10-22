@@ -39,13 +39,13 @@ public class CategoryEditController extends HttpServlet {
 		dispatcher.forward(req, resp);
 	}
 
-	
+//	
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
             throws ServletException, IOException {
 
         Category category = new Category();
-
+//
         DiskFileItemFactory factory = DiskFileItemFactory.builder().get();
         JakartaServletFileUpload upload = new JakartaServletFileUpload(factory);
 
@@ -77,7 +77,7 @@ public class CategoryEditController extends HttpServlet {
                     }
                 }
             }
-
+//
             cateService.edit(category);
             resp.sendRedirect(req.getContextPath() + "/admin/category/list");
 

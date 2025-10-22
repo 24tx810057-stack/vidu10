@@ -20,7 +20,7 @@ public class WaitingController extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + "/login");
 			return;
 		}
-
+//
 		UserModel user = (UserModel) session.getAttribute("account");
 		int role = user.getRoleid();
 

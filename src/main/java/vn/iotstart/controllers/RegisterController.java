@@ -23,7 +23,7 @@ public class RegisterController extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + "/waiting");
 			return;
 		}
-
+//
 		/*
 		 * Cookie[] cookies = req.getCookies(); if (cookies != null) { for (Cookie
 		 * cookie : cookies) { if ("account".equals(cookie.getName())) { session =
