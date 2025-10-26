@@ -56,11 +56,11 @@ public class LoginController extends HttpServlet {
         if (user != null) {
             HttpSession session = req.getSession(true);
             session.setAttribute("account", user);
-            session.setMaxInactiveInterval(60 * 5); // session hết hạn sau 5 phút
+            session.setMaxInactiveInterval(60 * 50); // session hết hạn sau xx phút
 
             // Nếu muốn nhớ login qua cookie
             Cookie cookie = new Cookie("account", user.getUsername());
-            cookie.setMaxAge(60 * 5); // 5 phút
+            cookie.setMaxAge(60 * 50); // 
             resp.addCookie(cookie);
 
             resp.sendRedirect(req.getContextPath() + "/waiting");

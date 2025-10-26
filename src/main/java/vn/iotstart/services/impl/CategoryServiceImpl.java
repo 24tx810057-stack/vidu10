@@ -46,6 +46,7 @@ public class CategoryServiceImpl implements CategoryService {
 		if (newCategory.getIcon() != null) {
 			// XOA ANH CU DI
 			String fileName = oldCategory.getIcon();
+			@SuppressWarnings("unused")
 			final String dir = "D:\\upload";
 			File file = new File(Constant.class + "/category/" + fileName);
 			if (file.exists()) {

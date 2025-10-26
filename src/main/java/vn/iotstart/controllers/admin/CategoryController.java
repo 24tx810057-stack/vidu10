@@ -14,7 +14,7 @@ import vn.iotstart.models.Category;
 import vn.iotstart.services.CategoryService;
 import vn.iotstart.services.impl.CategoryServiceImpl;
 
-@WebServlet(urlPatterns = { "/admin/category/list" })
+@WebServlet(urlPatterns = { "/admin/list-category" })
 public class CategoryController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     
